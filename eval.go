@@ -1135,14 +1135,20 @@ func bestCactusSplit(rank EvalRank, v []Card, base Rank) ([]Card, []Card) {
 }
 
 // bestAceHigh orders v by rank, high to low, Aces are high.
-func bestAceHigh(v []Card) {
-	sort.Slice(v, func(i, j int) bool {
-		m, n := v[i].Rank(), v[j].Rank()
+func bestAceHigh(c Cards) {
+
+	sort.Sort(c)
+}
+
+func bestAceHighOld(c Cards) {
+	sort.Slice(c, func(i, j int) bool {
+		m, n := c[i].Rank(), c[j].Rank()
 		if m == n {
-			return v[j].Suit() < v[i].Suit()
+			return c[j].Suit() < c[i].Suit()
 		}
 		return n < m
 	})
+
 }
 
 // bestAceLow orders v by rank, high to low, Aces are low.

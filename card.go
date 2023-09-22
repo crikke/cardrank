@@ -302,6 +302,26 @@ func (suit Suit) Emoji() string {
 // Card is a card consisting of a [Rank] (23456789TJQKA) and [Suit] (shdc).
 type Card uint32
 
+// Cards implements sort.Interface to prevent using reflection when sorting
+// I am only intrested in holdem so i never
+type Cards []Card
+
+func (c Cards) Len() int {
+	return len(c)
+}
+
+func (c Cards) Less(i, j int) bool {
+	m, n := c[i].Rank(), c[j].Rank()
+	if m == n {
+		return c[j].Suit() < c[i].Suit()
+	}
+	return n < m
+}
+
+func (c Cards) Swap(i, j int) {
+	c[i], c[j] = c[j], c[i]
+}
+
 // InvalidCard is an invalid card.
 const InvalidCard = ^Card(0)
 

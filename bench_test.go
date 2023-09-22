@@ -5,6 +5,17 @@ import (
 	"testing"
 )
 
+func BenchmarkSortAceHigh(b *testing.B) {
+	cards := shuffled(DeckFrench)
+
+	b.Run("old", func(b *testing.B) {
+		bestAceHighOld(cards)
+	})
+	b.Run("new", func(b *testing.B) {
+		bestAceHigh(cards)
+	})
+}
+
 func BenchmarkCactus(b *testing.B) {
 	for _, t := range cactusTests(true, false) {
 		for i, benchf := range []func(*testing.B, EvalFunc, int){
